@@ -180,6 +180,15 @@ angular.module('conFusion.controllers', [])
     $scope.$on('$destroy', function() {
       $scope.popover.remove();
     });
+
+
+    // add favorites
+    $scope.addFavorite = function (index) {
+      console.log("index is " + index);
+      favoriteFactory.addToFavorites(index);
+      $ionicListDelegate.closeOptionButtons();
+      $scope.popover.hide();
+    };
     //popover end
 
     // modal configuration for commentForm:
@@ -213,14 +222,6 @@ angular.module('conFusion.controllers', [])
       $scope.mycomment = {rating: "", comment: "", author: "", date: ""};
     }
     //
-
-    $scope.addFavorite = function (index) {
-      console.log("index is " + index);
-      favoriteFactory.addToFavorites(index);
-      $ionicListDelegate.closeOptionButtons();
-      $scope.popover.hide();
-    };
-
 
 
     $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id,10)})
