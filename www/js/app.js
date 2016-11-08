@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,6 +19,26 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+  });
+
+  $rootScope.$on('loading:show', function () {
+    $ionicLoading.show({
+      template: '<ion-spinner></ion-spinner> Loading ...'
+    })
+  });
+
+  $rootScope.$on('loading:hide', function () {
+    $ionicLoading.hide();
+  });
+
+  $rootScope.$on('$stateChangeStart', function () {     // *********
+    console.log('Loading ...');
+    $rootScope.$broadcast('loading:show');              //these two trigger the loading show and hide when the ui-router
+  });                                                   //starts a change --> show and the change is successful --> hide
+
+  $rootScope.$on('$stateChangeSuccess', function () {   // *********
+    console.log('done');
+    $rootScope.$broadcast('loading:hide');
   });
 })
 
