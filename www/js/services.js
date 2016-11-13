@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('conFusion.services', ['ngResource'])
-  .constant("baseURL","http://localhost:3000/")
-  .factory('menuFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+  .constant("baseURL","http://192.168.1.168:3000/")
 
+  .factory('menuFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
     return $resource(baseURL + "dishes/:id", null, {
       'update': {
         method: 'PUT'
@@ -20,16 +20,12 @@ angular.module('conFusion.services', ['ngResource'])
 
 
   .factory('corporateFactory', ['$resource', 'baseURL', function($resource,baseURL) {
-
-
-            return $resource(baseURL+"leadership/:id");
+    return $resource(baseURL+"leadership/:id");
 
   }])
 
   .factory('feedbackFactory', ['$resource', 'baseURL', function($resource,baseURL) {
-
-
-      return $resource(baseURL+"feedback/:id");
+    return $resource(baseURL+"feedback/:id");
 
   }])
 
