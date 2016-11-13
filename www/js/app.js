@@ -80,7 +80,9 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
           templateUrl: 'templates/aboutus.html',
           controller: 'AboutController',
           resolve: {
-            
+            leaders: [ 'corporateFactory', function(corporateFactory){
+              return corporateFactory.query();
+            }]
           }
         }
       }
