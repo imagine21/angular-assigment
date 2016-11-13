@@ -78,7 +78,10 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
       views: {
         'mainContent': {
           templateUrl: 'templates/aboutus.html',
-          controller: 'AboutController'
+          controller: 'AboutController',
+          resolve: {
+            
+          }
         }
       }
     })
@@ -118,8 +121,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers','conFusion.service
           controller: 'MenuController',
           resolve: {
             dishes: [ 'menuFactory', function(menuFactory){
-              return
-
+              return menuFactory.query();
             }]
           }
         }
