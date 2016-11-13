@@ -29,9 +29,9 @@ angular.module('conFusion.services', ['ngResource'])
 
   }])
 
-  .factory('favoriteFactory', ['$resource', 'baseURL', function ($resource, baseURL) {
+  .factory('favoriteFactory', ['$resource', 'baseURL','$localStorage', function ($resource, baseURL, $localStorage) {
     var favFac = {};
-    var favorites = [];
+    var favorites = $localStorage.getObject("myfavorites", "[]");
 
     favFac.addToFavorites = function (index) {
       for (var i = 0; i < favorites.length; i++) {
@@ -39,6 +39,8 @@ angular.module('conFusion.services', ['ngResource'])
           return;                               //this step is to make sure there are no duplicates in the list
       }
       favorites.push({id: index});   //is a js object
+
+      $localStorage.storeObject("myfavorites", favorites);
     };
 
     favFac.deleteFromFavorites = function (index) {
@@ -47,6 +49,8 @@ angular.module('conFusion.services', ['ngResource'])
           favorites.splice(i, 1);
         }
       }
+      
+      $localStorage.storeObject("myfavorites", favorites);
     }
 
     favFac.getFavorites = function () {
