@@ -319,7 +319,7 @@ angular.module('conFusion.controllers', [])
   }])
 
 
-  .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
+  .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$cordovaVibration', '$ionicPlatform', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $cordovaVibration,$ionicPlatform) {
 
     $scope.baseURL = baseURL;
     $scope.shouldShowDelete = false;
@@ -352,6 +352,12 @@ angular.module('conFusion.controllers', [])
       });
 
       $scope.shouldShowDelete = false;
+
+      // adding vibration pluggin:
+      $ionicPlatform.ready(function () {
+        $cordovaVibration.vibrate(100);
+      });
+
     }
 
    }])
