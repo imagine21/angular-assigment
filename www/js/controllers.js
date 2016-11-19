@@ -111,7 +111,7 @@ angular.module('conFusion.controllers', [])
       console.log("index is " + index);
       favoriteFactory.addToFavorites(index);
       $ionicListDelegate.closeOptionButtons();
-      
+
       //adding notification and message
       $ionicPlatform.ready(function () {
         $cordovaLocalNotification.schedule({
@@ -168,7 +168,7 @@ angular.module('conFusion.controllers', [])
     };
   }])
 
-  .controller('DishDetailController', ['$scope', '$stateParams','dish', 'menuFactory', 'favoriteFactory', 'baseURL','$ionicPopover','$ionicListDelegate','$ionicModal', function($scope, $stateParams, dish, menuFactory, favoriteFactory, baseURL, $ionicPopover,$ionicListDelegate, $ionicModal) {
+  .controller('DishDetailController', ['$scope', '$stateParams','dish', 'menuFactory', 'favoriteFactory', 'baseURL','$ionicPopover','$ionicListDelegate','$ionicModal','$ionicPlatform', '$cordovaLocalNotification', '$cordovaToast', function($scope, $stateParams, dish, menuFactory, favoriteFactory, baseURL, $ionicPopover,$ionicListDelegate, $ionicModal, $ionicPlatform, $cordovaLocalNotification, $cordovaToast) {
     $scope.baseURL = baseURL;
     $scope.dish = {};
     $scope.dish = dish;
@@ -204,6 +204,28 @@ angular.module('conFusion.controllers', [])
       favoriteFactory.addToFavorites(index);
       $ionicListDelegate.closeOptionButtons();
       $scope.popover.hide();
+
+      //adding notification and toast message
+      $ionicPlatform.ready(function () {
+        $cordovaLocalNotification.schedule({
+          id: 1,
+          title: "Added Favorite",
+          text: $scope.dish.name
+        }).then(function () {
+            console.log('Added Favorite '+$scope.dish.name);
+          },
+          function () {
+            console.log('Failed to add Notification ');
+          });
+
+        $cordovaToast
+          .show('Added Favorite '+$scope.dish.name, 'long', 'center')
+          .then(function (success) {
+            // success
+          }, function (error) {
+            // error
+          });
+      });
     };
     //popover end
 
